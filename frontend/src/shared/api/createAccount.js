@@ -1,6 +1,6 @@
 const postToken = async (service_id, login, token) => {
     try {
-        const response = await fetch('http://localhost:5000/api/account', {
+        const response = await fetch('https://uapplication-frontend.onrender.com/api/account', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
