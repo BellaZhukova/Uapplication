@@ -1,11 +1,10 @@
 import Site from '../models/siteModel.js';
-import Account from '../models/accountModel.js';
 
 const getSiteInfo = async (req, res) => {
     try {
-        const site = Site.findAll();
+        const site = await Site.findAll();
 
-        return res.status(200).json({message: "Успешно"});
+        return res.status(200).json(site);
     } catch (error) {
         return res.status(500).json({error: "Ошибка сервера!"})
     }

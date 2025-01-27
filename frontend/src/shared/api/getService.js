@@ -1,6 +1,6 @@
 const getService = async (array) => {
     try {
-        const response = await fetch('https://uapplication-backend.onrender.com/api/');
+        const response = await fetch(`${import.meta.env.VITE_API_DEV}`);
         const data = await response.json();
         array.value = data;
         

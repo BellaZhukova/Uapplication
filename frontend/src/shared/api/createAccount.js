@@ -1,11 +1,11 @@
-const postToken = async (service_id, login, token) => {
+const postToken = async (service_id, login, token, counter_id, name_site, url_site) => {
     try {
-        const response = await fetch('https://uapplication-backend.onrender.com/api/account', {
+        const response = await fetch(`${import.meta.env.VITE_API_DEV}/account`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({service_id, login, token})
+            body: JSON.stringify({service_id, login, token, counter_id, name_site, url_site})
         })
 
         localStorage.setItem('token', token);

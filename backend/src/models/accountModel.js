@@ -30,5 +30,9 @@ const Account = sequelize.define('Account', {
     tableName: 'account',
 });
 
+Account.associate = (models) => {
+    // Один аккаунт может иметь несколько сайтов
+    Account.hasMany(models.Site, { foreignKey: 'account_id' });
+  };
 
 export default Account;

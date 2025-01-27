@@ -32,8 +32,8 @@
           </div>
           <ButtonApp @click="checkSite">Проверка</ButtonApp>
           <p>{{ message }}</p>
-          <router-link v-if="isValidSite === true" to="/counters">
-            <ButtonApp @click="handleCreate(serviceID, login, tokenAuth)">Продолжить</ButtonApp>
+          <router-link v-if="isValidSite === true" to="/pattern">
+            <ButtonApp @click="createAccount(serviceID, login, tokenAuth, counterID, nameSite, urlSite)">Продолжить</ButtonApp>
           </router-link>
       </div>
     </div>
@@ -45,7 +45,6 @@
   import getCounters from '../shared/api/getCounters';
   import InputApp from '../components/InputApp.vue';
   import ButtonApp from '../components/ButtonApp.vue';
-  import createSite from '../shared/api/createSite.js';
   
   const clientID = ref('');
   const tokenAuth = ref('');
@@ -54,6 +53,7 @@
   const login = ref('');
   const serviceID = localStorage.getItem('id');
   const counters = ref([]);
+  const counterID = ref('');
   let message = ref('');
   let isValidSite = false;
   
@@ -79,16 +79,13 @@
         }
     })
 
+    counters.value.forEach(item => counterID.value = item.id)
+
     if (isValidSite) {
         message.value = "Проверка выполнена успешно!";
     } else {
         message.value = "Ошибка! Повторите попытку снова!";
     }
-  }
-  
-  const handleCreate = async (serviceID, login, tokenAuth, nameSite, urlSite) => {
-    await createAccount(serviceID, login, tokenAuth);
-    await createSite(nameSite, urlSite)
   }
   
   </script>

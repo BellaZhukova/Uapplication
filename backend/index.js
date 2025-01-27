@@ -9,14 +9,14 @@ import ApiCall from "./src/models/apiCallModel.js";
 import Site from "./src/models/siteModel.js";
 import Interval from "./src/models/intervalModel.js";
 
-import "../backend/src/models/associations.js"
+// import "../backend/src/models/associations.js"
 
 dotenv.config();
 
 const app = express();
 
 const corsOptions = {
-    origin: "https://uapplication-frontend.onrender.com",
+    origin: "http://localhost:5173",
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,

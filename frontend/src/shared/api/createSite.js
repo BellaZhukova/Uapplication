@@ -1,6 +1,6 @@
 const createSite = async (name_site, url_site) => {
     try {
-        const response = await fetch('https://uapplication-backend.onrender.com/api/site', {
+        const response = await fetch(`${import.meta.env.VITE_API_DEV}/site`, {
             method: 'POST', 
             headers: {
                 'Content-Type': 'application/json',

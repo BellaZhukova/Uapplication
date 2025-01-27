@@ -1,6 +1,6 @@
 const chooseService = async (name) => {
     try {
-        const response = await fetch('https://uapplication-backend.onrender.com/api/', {
+        const response = await fetch(`${import.meta.env.VITE_API_DEV}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -30,7 +30,8 @@ const ApiCall = sequelize.define('ApiCall', {
     }
 },
 {
-    tableName: "api_call"
+    tableName: "api_call",
+    timestamps: false
 })
 
 export default ApiCall;

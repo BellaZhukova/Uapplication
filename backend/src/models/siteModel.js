@@ -11,6 +11,10 @@ const Site = sequelize.define("Site", {
     },
     account_id: {
         type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    counter_id: {
+        type: DataTypes.INTEGER, 
         allowNull: false
     },
     name_site: {
@@ -25,6 +29,11 @@ const Site = sequelize.define("Site", {
 {
     tableName: "site"
 })
+
+Site.associate = (models) => {
+    // Каждый сайт принадлежит одному аккаунту
+    Site.belongsTo(models.Account, { foreignKey: 'account_id' });
+  };
 
 
 export default Site;

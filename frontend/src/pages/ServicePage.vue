@@ -21,7 +21,6 @@ import chooseService from '../shared/api/chooseService.js';
 import ButtonApp from '../components/ButtonApp.vue';
 
 const services = ref([]);
-
 const selectedServices = ref('');
 const serviceID = ref('');
 
