@@ -28,7 +28,12 @@ const Service = sequelize.define('Service', {
     timestamps: false
 });
 
-
+Service.create({
+    service_id: "23",
+    api_id: "1",
+    name_service: "Яндекс Метрика",
+    url_service: "metrika.yandex.ru"
+})
 
 export default Service;
 
