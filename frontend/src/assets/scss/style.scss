@@ -1,0 +1,27 @@
+@import "./variables.scss";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: $font-family;
+}
+
+.container {
+    max-width: 1420px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.button {
+    font-family: $font-family;
+    padding: 5px 10px;
+    background-color: var(--main-color);
+    color: var(--text-color-light);
+    font-size: $font-size-normal;
+    border: none;
+    font-weight: 600;
+}
