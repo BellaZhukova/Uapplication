@@ -1,6 +1,6 @@
 const chooseService = async (name) => {
     try {
-        const response = await fetch('https://uapplication-frontend.onrender.com/api/', {
+        const response = await fetch('https://uapplication-backend.onrender.com/api/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
