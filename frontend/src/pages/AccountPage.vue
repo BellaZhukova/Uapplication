@@ -32,19 +32,22 @@
           </div>
           <ButtonApp @click="checkSite">Проверка</ButtonApp>
           <p>{{ message }}</p>
-          <router-link v-if="isValidSite === true" to="/pattern">
-            <ButtonApp @click="createAccount(serviceID, login, tokenAuth, counterID, nameSite, urlSite)">Продолжить</ButtonApp>
-          </router-link>
+          <div v-if="isValidSite === true">
+            <ButtonApp @click="handleCreate(serviceID, login, tokenAuth, counterID, nameSite, urlSite)">Продолжить</ButtonApp>
+          </div>
       </div>
     </div>
   </template>
   
   <script setup>
   import { ref } from 'vue';
-  import createAccount from '../shared/api/createAccount';
+  import { useRouter } from 'vue-router';
+  import createData from '../shared/api/createData.js';
   import getCounters from '../shared/api/getCounters';
   import InputApp from '../components/InputApp.vue';
   import ButtonApp from '../components/ButtonApp.vue';
+
+  const router = useRouter();
   
   const clientID = ref('');
   const tokenAuth = ref('');
@@ -86,6 +89,11 @@
     } else {
         message.value = "Ошибка! Повторите попытку снова!";
     }
+  }
+
+  const handleCreate = async (serviceID, login, tokenAuth, counterID, nameSite, urlSite) => {
+    const siteId = await createData(serviceID, login, tokenAuth, counterID, nameSite, urlSite);
+    router.push(`pattern/${siteId}`);
   }
   
   </script>

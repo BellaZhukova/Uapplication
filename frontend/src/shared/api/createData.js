@@ -1,4 +1,4 @@
-const postToken = async (service_id, login, token, counter_id, name_site, url_site) => {
+const createData = async (service_id, login, token, counter_id, name_site, url_site) => {
     try {
         const response = await fetch(`${import.meta.env.VITE_API_DEV}/account`, {
             method: 'POST',
@@ -12,10 +12,11 @@ const postToken = async (service_id, login, token, counter_id, name_site, url_si
         console.log(token)
 
         const data = await response.json();
-        console.log(data)
+
+        return data;
     } catch (error) {
         console.log(error);
     }
 }
 
-export default postToken;
+export default createData;

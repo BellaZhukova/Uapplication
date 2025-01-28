@@ -18,7 +18,7 @@ const createAccount = async (req, res) => {
             url_site,
         });
 
-        return res.status(201).json({ message: "Account and site successfully created!" });
+        return res.status(201).json(site.site_id);
     } catch (error) {
 
         console.error(error);
