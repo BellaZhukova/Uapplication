@@ -44,6 +44,8 @@ onMounted(() => {
         align-items: center;
         justify-content: center;
         flex-direction: column;
+        gap: 40px;
+        padding-top: $padding-top;
 
         &__title {
             font-size: $font-size-title;

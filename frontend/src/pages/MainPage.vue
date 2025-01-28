@@ -21,6 +21,7 @@
                     </div>
                 </div>
                 <div class="main__next">
+                    <p>Вашего сайта нет в списке?</p>
                     <router-link to="/service">
                         <ButtonApp>Добавить</ButtonApp>
                     </router-link>
@@ -53,12 +54,13 @@ onMounted(async () => {
     align-items: center;
     justify-content: center;
     width: 100%;
+    padding-top: $padding-top;
 
     &__content {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 20px;
+        gap: 30px;
         width: 100%;
     }
 
@@ -71,7 +73,7 @@ onMounted(async () => {
         &__block {
             display: flex;
             gap: 20px;
-            width: 100%;
+            width: 1420px;
         }
 
         &__input {
@@ -93,6 +95,9 @@ onMounted(async () => {
         display: flex;
         flex-direction: column;
         width: 100%;
+        max-height: 600px;
+        overflow-y: auto;
+        
 
         &__item {
             display: flex;
@@ -120,7 +125,9 @@ onMounted(async () => {
 
     .main__next {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
     }
 }
 
