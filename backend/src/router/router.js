@@ -1,7 +1,7 @@
 import express from "express";
 import { serviceChoose, getService } from "../controllers/serviceController.js";
 import { createAccount } from "../controllers/accountController.js";
-import { getSiteInfo, createSite } from "../controllers/siteController.js";
+import { getSiteInfo, getSiteId, createSite } from "../controllers/siteController.js";
 import { getApi } from "../controllers/apiCallController.js";
 
 const router = express.Router();
@@ -12,7 +12,9 @@ router.post('/', serviceChoose);
 
 router.post('/account', createAccount);
 
-router.get('/site', getSiteInfo);
+router.get('/sites', getSiteInfo);
+
+router.get('/site/:id', getSiteId)
 
 router.post('/site', createSite);
 

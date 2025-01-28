@@ -10,13 +10,15 @@
                     </div>
                 </div>
                 <div class="sites">
-                    <router-link to="/report" class="sites__item" v-for="index in sites" :key="index.id">
-                        <p class="sites__name">{{ index.name_site }}</p>
-                        <p class="sites__url">{{ index.url_site }}</p>
-                        <router-link>
+                    <div class="sites__item" v-for="index in sites" :key="index.id">
+                        <div @click="router.push(`/report/${index.site_id}`)" class="sites__params">
+                            <p class="sites__name">{{ index.name_site }}</p>
+                            <p class="sites__url">{{ index.url_site }}</p>
+                        </div>
+                        <div @click.stop="router.push(`/pattern/${index.site_id}`)">
                             <button class="sites__button">Редактировать</button>
-                        </router-link>
-                    </router-link>
+                        </div>
+                    </div>
                 </div>
                 <div class="main__next">
                     <router-link to="/service">
@@ -31,11 +33,14 @@
 <script setup>
 import ButtonApp from "./../components/ButtonApp.vue"
 import { onMounted, ref } from "vue";
-import getSite from "../shared/api/getSite";
+import { useRouter } from "vue-router";
+import getSites from "../shared/api/getSites.js";
+
+const router = useRouter();
 const sites = ref([]);
 
-onMounted(() => {
-    getSite(sites);
+onMounted(async () => {
+    await getSites(sites);
 })
 
 </script>
@@ -47,12 +52,14 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
 
     &__content {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 20px;
+        width: 100%;
     }
 
     .search {
@@ -60,34 +67,61 @@ onMounted(() => {
         &__title {
             font-size: $font-size-meduim;
         }
+
+        &__block {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+        }
+
         &__input {
-            max-width: 1300px;
             width: 100%;
             height: 40px;
             padding: 0 10px;
             outline: none;
             font-size: $font-size-meduim;
+            box-sizing: border-box;
+        }
+
+        &__button {
+            max-width: 70px;
+            width: 100%;
         }
     }
+
     .sites {
         display: flex;
         flex-direction: column;
+        width: 100%;
 
         &__item {
             display: flex;
+            width: 100%;
         }
 
-        &__name {
-            width: 300px;
-            border: 1px solid black;
-            text-align: center;
+        &__params {
+            display: flex;
+            width: 100%;
+            cursor: pointer;
         }
-        
-        &__url {
-            width: 350px;
+
+        &__name, &__url {
+            flex: 1; 
             border: 1px solid black;
             text-align: center;
+            padding: 10px;
+        }
+
+        &__button {
+            width: 200px;
+            height: 100%;
         }
     }
+
+    .main__next {
+        display: flex;
+        justify-content: center;
+    }
 }
+
 </style>

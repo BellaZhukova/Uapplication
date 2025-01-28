@@ -10,11 +10,18 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import getApi from "../shared/api/getApi.js"
-const apiName = ref([]);
+import getSite from '../shared/api/getSite.js';
+import { useRoute } from 'vue-router';
 
-onMounted(() => {
-    getApi(apiName);
-    console.log(apiName)
+const route = useRoute();
+const apiName = ref([]);
+const siteId = route.params.id;
+const site = ref([]);
+
+onMounted(async () => {
+    await getApi(apiName);
+    await getSite(siteId, site);
+    console.log(site)
 })
 </script>
 

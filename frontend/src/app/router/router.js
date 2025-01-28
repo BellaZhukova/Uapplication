@@ -15,11 +15,11 @@ const routes = [
         component: () => import('../../pages/AccountPage.vue')
     },
     {
-        path: '/pattern',
+        path: '/pattern/:id',
         component: () => import('../../pages/PatternPage.vue')
     },
     {
-        path: '/report',
+        path: '/report/:id',
         component: () => import('../../pages/ReportPage.vue')
     },
 ]
