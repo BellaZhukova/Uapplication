@@ -11,21 +11,23 @@
                 <div class="metriks__item" v-for="index in apiName" :key="index.id">
                     <p class="metriks__name">{{ index.name_api }}</p>
                     <p class="metriks__data">
-                        <input type="checkbox" :name="'set' + index.api_id" :id="'set' + index.api_id">
+                        <input type="checkbox" v-if="model[index.api_id]"  :name="'set' + index.api_id" :id="'set' + index.api_id" v-model="model[index.api_id].isChecked">
                         <label :for="'set' + index.api_id">Собирать</label>
                     </p>
                     <div class="metriks__interval">
                         <div class="interval">
-                            <input type="radio" :name="'interval_' + index.api_id" :id="'day_' + index.api_id">
+                            <input type="radio" v-if="model[index.api_id]"  :name="'interval_' + index.api_id" :id="'day_' + index.api_id" value="day" v-model="model[index.api_id].interval">
                             <label :for="'day_' + index.api_id">1 раз в день</label>
                         </div>
                         <div class="interval">
-                            <input type="radio" :name="'interval_' + index.api_id" :id="'hour_' + index.api_id">
+                            <input type="radio" v-if="model[index.api_id]"  :name="'interval_' + index.api_id" :id="'hour_' + index.api_id" value="hour" v-model="model[index.api_id].interval">
                             <label :for="'hour_' + index.api_id">1 раз в час</label>
                         </div>
                     </div>
                 </div>
             </div>
+            <ButtonApp @click="checkState()">Сохранить</ButtonApp>
+            <p>{{ dataMetriks }}</p>
         </div>
     </div>
 </template>
@@ -34,18 +36,68 @@
 import { ref, onMounted } from 'vue';
 import getApi from "../shared/api/getApi.js"
 import getSite from '../shared/api/getSite.js';
+import getVisits from '../shared/metriks/getVisits.js';
 import { useRoute } from 'vue-router';
+import ButtonApp from '../components/ButtonApp.vue';
 
 const route = useRoute();
 const apiName = ref([]);
 const siteId = route.params.id;
+let apiPath = ref([]);
 const site = ref([]);
+let counterId = ref('');
+const dataMetriks = ref([]);
+
+const model = ref({
+    isChecked: true,
+})
+
+const checkState = async () => {
+    try {
+        apiName.value.forEach(item => {
+            if (model.value[item.api_id].isChecked) {
+                const params = {
+                    interval: model.value[item.api_id].interval,
+                    counterId: counterId,
+                };
+                console.log(params.interval)
+
+                getVisits(item.url_api, params.counterId, dataMetriks);
+                console.log()
+            }
+        });
+    } catch (error) {
+        console.log('Ошибка при отправке запроса:', error);
+    }
+};
 
 onMounted(async () => {
-    await getApi(apiName);
-    await getSite(siteId, site);
-    console.log(site)
+    try {
+        await getApi(apiName);
+        await getSite(siteId, site);
+        console.log(site.value)
+
+        apiName.value.forEach(item => {
+            model.value[item.api_id] = {
+                isChecked: true,
+                interval: 'day',
+            };
+        });
+
+        apiName.value.forEach(item => {
+            apiPath.value.push(item.url_api);
+        })
+
+        site.value.forEach(item => {
+            counterId = item.counter_id;
+        })
+
+
+    } catch (error) {
+        console.log(error)
+    }
 })
+
 </script>
 
 <style lang="scss">

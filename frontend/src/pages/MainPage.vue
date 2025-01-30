@@ -42,6 +42,7 @@ const sites = ref([]);
 
 onMounted(async () => {
     await getSites(sites);
+    console.log(sites);
 })
 
 </script>
@@ -52,8 +53,10 @@ onMounted(async () => {
 .main {
     display: flex;
     align-items: center;
-    justify-content: center;
     width: 100%;
+    flex-direction: column;
+    justify-content: space-between; 
+    height: 90vh;
     padding-top: $padding-top;
 
     &__content {
@@ -62,6 +65,7 @@ onMounted(async () => {
         align-items: center;
         gap: 30px;
         width: 100%;
+        flex-grow: 1;
     }
 
     .search {
@@ -128,6 +132,8 @@ onMounted(async () => {
         flex-direction: column;
         gap: 20px;
         align-items: center;
+        margin-top: auto;
+        padding-bottom: $padding-top;
     }
 }
 

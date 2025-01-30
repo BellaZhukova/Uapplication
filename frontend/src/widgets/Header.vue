@@ -2,10 +2,12 @@
     <header class="header">
         <div class="container">
             <div class="header__container">
-                <h1>SEOLog</h1>
-                <div class="header__data">
-                    <p>{{ site.name_site }}</p>
-                    <p>{{ site.url_site }}</p>
+                <router-link to="/" class="header__title">
+                    <h1>SEOLog</h1>
+                </router-link>
+                <div class="header__data" v-for="index in site" :key="index.id">
+                    <p>{{ index.name_site }}</p>
+                    <p>{{ index.url_site }}</p>
                 </div>
             </div>
         </div>
@@ -28,6 +30,7 @@ const site = ref([]);
 const siteData = async () => {
     console.log(props.siteId);
     await getSite(props.siteId, site);
+    console.log(site)
 };
 
 watch(() => props.siteId, () => {
@@ -39,6 +42,10 @@ watch(() => props.siteId, () => {
 .header {
     background-color: #D9D9D9;
     padding: 20px 0;
+
+    &__title {
+        text-decoration: none;
+    }
 
     &__container {
         display: flex;

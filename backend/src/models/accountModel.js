@@ -1,4 +1,4 @@
-import { DataTypes } from "sequelize";
+import { Sequelize, DataTypes } from "sequelize";
 import sequelize from "../configs/db.js";
 import Site from "./siteModel.js";
 
@@ -22,7 +22,7 @@ const Account = sequelize.define('Account', {
         allowNull: false
     },
     site_id: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.ARRAY(Sequelize.INTEGER),
         allowNull: true
     }
 }, 

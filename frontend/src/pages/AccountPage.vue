@@ -27,7 +27,7 @@
             </div>
             <div class="form__item">
                 <p>Введите URL сайта</p>
-                <InputApp v-model="urlSite"/>
+                <InputApp v-model="urlSite" @input="validateURL"/>
             </div>
           </div>
           <ButtonApp @click="checkSite">Проверка</ButtonApp>
@@ -43,7 +43,7 @@
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
   import createData from '../shared/api/createData.js';
-  import getCounters from '../shared/api/getCounters';
+  import getCounters from '../shared/metriks/getCounters.js';
   import InputApp from '../components/InputApp.vue';
   import ButtonApp from '../components/ButtonApp.vue';
 
@@ -70,8 +70,23 @@
     const url = `https://oauth.yandex.ru/authorize?response_type=token&client_id=${clientID.value}`;
     window.open(url, '_blank', 'width=800,height=800');
   };
+
+  const validateURL = () => {
+    const regexProtocol = /^https?:\/\//;
+    urlSite.value = urlSite.value.replace(regexProtocol, '');
+
+    const regexSlash = /\/$/;
+    urlSite.value = urlSite.value.replace(regexSlash, '');
+};
   
   const checkSite = async () => {
+
+    if (!login.value || !tokenAuth.value || !nameSite.value || !urlSite.value) {
+        message.value = 'Пожалуйста, заполните все поля!';
+        isValidSite = false;
+        return;
+    }
+
     localStorage.setItem('token', tokenAuth.value)
     await getCounters(counters);
     console.log(counters.value)
@@ -79,10 +94,9 @@
     counters.value.forEach(item => {
         if (urlSite.value === item.site & login.value === item.owner_login) {
             isValidSite = true;
+            counterID.value = item.id
         }
     })
-
-    counters.value.forEach(item => counterID.value = item.id)
 
     if (isValidSite) {
         message.value = "Проверка выполнена успешно!";

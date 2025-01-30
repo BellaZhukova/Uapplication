@@ -3,7 +3,6 @@ const getApi = async (array) => {
         const response = await fetch(`${import.meta.env.VITE_API_DEV}/api_call`);
         const data = await response.json();
         array.value = data;
-        console.log(data);
     } catch (error) {
         console.log(error);
     }
