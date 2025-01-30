@@ -33,7 +33,7 @@ app.use('/api', router);
 
 (async () => {
     try {
-        await sequelize.drop();
+        await sequelize.sync();
         console.log('Модели синхронизированы с базой данных.');
 
         app.listen(process.env.PORT, () => {
