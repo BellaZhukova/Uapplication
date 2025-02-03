@@ -1,8 +1,8 @@
-import express from "express";
-import { serviceChoose, getService } from "../controllers/serviceController.js";
-import { createAccount } from "../controllers/accountController.js";
-import { getSiteInfo, getSiteId, createSite } from "../controllers/siteController.js";
-import { getApi } from "../controllers/apiCallController.js";
+const express = require('express');
+const { serviceChoose, getService } = require('../controllers/serviceController.js');
+const { createAccount } = require('../controllers/accountController.js');
+const { getSiteInfo, getSiteId, createSite } = require('../controllers/siteController.js');
+const { getApi } = require('../controllers/apiCallController.js');
 
 const router = express.Router();
 
@@ -21,4 +21,4 @@ router.post('/site', createSite);
 router.get('/api_call', getApi);
 
 
-export default router;
+module.exports = router;

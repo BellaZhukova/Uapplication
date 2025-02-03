@@ -1,15 +1,8 @@
-import express from "express";
-import router from "./src/router/router.js";
-import dotenv from 'dotenv';
-import sequelize from "./src/configs/db.js";
-import cors from "cors";
-import Service from "./src/models/serviceModel.js";
-import Account from "./src/models/accountModel.js";
-import ApiCall from "./src/models/apiCallModel.js";
-import Site from "./src/models/siteModel.js";
-import Interval from "./src/models/intervalModel.js";
-
-// import "../backend/src/models/associations.js"
+const express = require('express');
+const dotenv = require('dotenv');
+const cors = require('cors');
+const router = require('./src/router/router.js');
+const { sequelize } = require('./src/models');
 
 dotenv.config();
 
@@ -33,7 +26,7 @@ app.use('/api', router);
 
 (async () => {
     try {
-        await sequelize.sync();
+        await sequelize.authenticate();
         console.log('Модели синхронизированы с базой данных.');
 
         app.listen(process.env.PORT, () => {

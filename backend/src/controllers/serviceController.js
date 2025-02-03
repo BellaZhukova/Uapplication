@@ -1,4 +1,4 @@
-import Service from "../models/serviceModel.js";
+const { Service } = require('../models');
 
 const serviceChoose = async (req, res) => {
     const { name } = req.body;
@@ -26,5 +26,5 @@ const getService = async (req, res) => {
     }
 }
 
-export { serviceChoose, getService };
+module.exports = { serviceChoose, getService };
 

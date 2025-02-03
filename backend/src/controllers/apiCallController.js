@@ -1,4 +1,4 @@
-import ApiCall from "../models/apiCallModel.js";
+const { ApiCall } = require('../models');
 
 const getApi = async (req, res) => {
     try {
@@ -11,4 +11,4 @@ const getApi = async (req, res) => {
 }
 
 
-export { getApi };
+module.exports = {getApi};

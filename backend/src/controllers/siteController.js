@@ -1,4 +1,4 @@
-import Site from '../models/siteModel.js';
+const { Site } = require('../models');
 
 const getSiteInfo = async (req, res) => {
     try {
@@ -37,4 +37,4 @@ const createSite = async (req, res) => {
 }
 
 
-export {getSiteInfo, getSiteId, createSite};
+module.exports = {getSiteInfo, getSiteId, createSite};

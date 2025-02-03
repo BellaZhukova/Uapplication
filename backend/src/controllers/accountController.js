@@ -1,5 +1,5 @@
-import Account from "../models/accountModel.js";
-import Site from "../models/siteModel.js";
+const { Account } = require('../models');
+const { Site } = require('../models');
 
 const createAccount = async (req, res) => {
     const { service_id, login, token, counter_id, name_site, url_site } = req.body;
@@ -64,4 +64,4 @@ const createAccount = async (req, res) => {
 //     }
 // }
 
-export { createAccount };
+module.exports = {createAccount};
