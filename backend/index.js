@@ -9,8 +9,8 @@ dotenv.config();
 const app = express();
 
 const corsOptions = {
-    origin: "http://localhost:5173",
-    methods: ['GET', 'POST'],
+    origin: "http://localhost:5174",
+    methods: ['GET', 'POST', 'PUT'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
     maxAge: 3600

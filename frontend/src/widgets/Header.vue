@@ -5,9 +5,15 @@
                 <router-link to="/" class="header__title">
                     <h1>SEOLog</h1>
                 </router-link>
-                <div class="header__data" v-for="index in site" :key="index.id">
-                    <p>{{ index.name_site }}</p>
-                    <p>{{ index.url_site }}</p>
+                <div class="header__data">
+                    <div class="header__account" v-for="index in account" :key="index.id">
+                        <p>{{ index.service_name }}</p>
+                        <p>{{ index.login }}</p>
+                    </div>
+                    <div class="header__site" v-for="index in site" :key="index.id">
+                        <p>{{ index.name_site }}</p>
+                        <p>{{ index.url_site }}</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -17,6 +23,7 @@
 <script setup>
 import { ref, defineProps, watch } from 'vue';
 import getSite from '../shared/api/getSite.js';
+import getDataAccountById from '../shared/api/getDataAccountById.js';
 
 const props = defineProps({
     siteId: {
@@ -26,11 +33,11 @@ const props = defineProps({
 });
 
 const site = ref([]);
+const account = ref([]);
 
 const siteData = async () => {
-    console.log(props.siteId);
     await getSite(props.siteId, site);
-    console.log(site)
+    await getDataAccountById(props.siteId, account);
 };
 
 watch(() => props.siteId, () => {
@@ -53,9 +60,10 @@ watch(() => props.siteId, () => {
         align-items: center;
     }
 
-    &__data {
+    &__data, &__account, &__site {
         display: flex;
         gap: 20px;
     }
+
 }
 </style>

@@ -1,19 +1,19 @@
-const createData = async (service_id, login, token, counter_id, name_site, url_site) => {
+const createData = async (service_id, login, token) => {
     try {
         const response = await fetch(`${import.meta.env.VITE_API_DEV}/account`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({service_id, login, token, counter_id, name_site, url_site})
+            body: JSON.stringify({service_id, login, token})
         })
 
-        localStorage.setItem('token', token);
-        console.log(token)
-
         const data = await response.json();
+        localStorage.setItem('account_id', data)
+        localStorage.setItem('token', token)
 
         return data;
+
     } catch (error) {
         console.log(error);
     }

@@ -21,19 +21,11 @@
                     <ButtonApp @click="getToken">Получить</ButtonApp>
                 </div>
             </div>
-            <div class="form__item">
-                <p>Введите название сайта</p>
-                <InputApp v-model="nameSite"/>
-            </div>
-            <div class="form__item">
-                <p>Введите URL сайта</p>
-                <InputApp v-model="urlSite" @input="validateURL"/>
-            </div>
           </div>
-          <ButtonApp @click="checkSite">Проверка</ButtonApp>
           <p>{{ message }}</p>
-          <div v-if="isValidSite === true">
-            <ButtonApp @click="handleCreate(serviceID, login, tokenAuth, counterID, nameSite, urlSite)">Продолжить</ButtonApp>
+          <p>{{ siteId }}</p>
+          <div>
+            <ButtonApp @click="handleCreate(serviceID, login, tokenAuth)">Продолжить</ButtonApp>
           </div>
       </div>
     </div>
@@ -42,7 +34,7 @@
   <script setup>
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
-  import createData from '../shared/api/createData.js';
+  import createAccount from '../shared/api/createAccount.js';
   import getCounters from '../shared/metriks/getCounters.js';
   import InputApp from '../components/InputApp.vue';
   import ButtonApp from '../components/ButtonApp.vue';
@@ -51,15 +43,12 @@
   
   const clientID = ref('');
   const tokenAuth = ref('');
-  const nameSite = ref('');
-  const urlSite = ref('');
   const login = ref('');
   const serviceID = localStorage.getItem('id');
   const counters = ref([]);
   const counterID = ref('');
   let message = ref('');
-  let isValidSite = false;
-  
+
   const getClientID = () => {
     const url = 'https://oauth.yandex.ru';
     window.open(url, '_blank', 'width=800,height=800');
@@ -71,43 +60,43 @@
     window.open(url, '_blank', 'width=800,height=800');
   };
 
-  const validateURL = () => {
-    const regexProtocol = /^https?:\/\//;
-    urlSite.value = urlSite.value.replace(regexProtocol, '');
 
-    const regexSlash = /\/$/;
-    urlSite.value = urlSite.value.replace(regexSlash, '');
-};
-  
-  const checkSite = async () => {
+  const handleCreate = async (serviceID, login, tokenAuth) => {
 
-    if (!login.value || !tokenAuth.value || !nameSite.value || !urlSite.value) {
+    if (!login || !tokenAuth) {
         message.value = 'Пожалуйста, заполните все поля!';
-        isValidSite = false;
         return;
     }
 
-    localStorage.setItem('token', tokenAuth.value)
+    localStorage.setItem('token', tokenAuth)
+
     await getCounters(counters);
-    console.log(counters.value)
 
-    counters.value.forEach(item => {
-        if (urlSite.value === item.site & login.value === item.owner_login) {
-            isValidSite = true;
-            counterID.value = item.id
-        }
-    })
+    console.log(login)
 
-    if (isValidSite) {
-        message.value = "Проверка выполнена успешно!";
-    } else {
-        message.value = "Ошибка! Повторите попытку снова!";
+    let isLoginValid = false;
+    
+    for (let item of counters.value) {
+      if (login === item.owner_login) {
+        isLoginValid = true;
+        break;
+      }
     }
-  }
 
-  const handleCreate = async (serviceID, login, tokenAuth, counterID, nameSite, urlSite) => {
-    const siteId = await createData(serviceID, login, tokenAuth, counterID, nameSite, urlSite);
-    router.push(`pattern/${siteId}`);
+    if (!isLoginValid) {
+        message.value = 'Неверный логин!';
+        return;
+    } else {
+        message.value = '';
+    }
+
+    const siteId = await createAccount(serviceID, login, tokenAuth);
+    if (siteId.message && siteId.message === 'Такой аккаунт уже существует!') {
+            console.log('Аккаунт уже существует!');
+            message.value = siteId.message;
+            return;  
+        }
+    router.push('/create-site');
   }
   
   </script>
@@ -120,11 +109,12 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    gap: 40px;
+    gap: 20px;
     padding-top: $padding-top;
   
     &__title {
       font-size: $font-size-title;
+      padding-bottom: $padding-top;
     }
     
     .form {

@@ -1,5 +1,20 @@
 const { Site } = require('../models');
 
+const createSite = async (req, res) => {
+    const {account_id, counter_id, name_site, url_site} = req.body;
+    try {
+        const site = await Site.create({account_id, counter_id, name_site, url_site});
+
+        if(!site) {
+            return res.status(500).json({error: "Сайт не удалось создать"})
+        }
+
+        return res.status(201).json(site.site_id)
+    } catch(error) {
+        res.status(500).json({error: "Ошибка сервера"})
+    }
+}
+
 const getSiteInfo = async (req, res) => {
     try {
         const site = await Site.findAll();
@@ -22,17 +37,6 @@ const getSiteId = async (req, res) => {
         return res.status(200).json(site);
     } catch (error) {
         return res.status(500).json(error);
-    }
-}
-
-const createSite = async (req, res) => {
-    const {name_site, url_site} = req.body;
-    try {
-        const site = Site.create({name_site, url_site});
-
-        return res.status(201).json({message: "Сайт создан"})
-    } catch(error) {
-        res.status(500).json({error: "Ошибка сервера"})
     }
 }
 

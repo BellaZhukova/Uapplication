@@ -15,6 +15,14 @@ const routes = [
         component: () => import('../../pages/AccountPage.vue')
     },
     {
+        path: '/accounts',
+        component: () => import('../../pages/AccountsPage.vue')
+    },
+    {
+        path: '/create-site',
+        component: () => import('../../pages/SitePage.vue')
+    },
+    {
         path: '/pattern/:id',
         component: () => import('../../pages/PatternPage.vue')
     },

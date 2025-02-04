@@ -3,6 +3,7 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Account extends Model {
     static associate(models) {
+      Account.belongsTo(models.Service, {foreignKey: 'service_id'})
       Account.hasMany(models.Site, { foreignKey: 'account_id' });
     }
   }
